@@ -18,18 +18,15 @@ function UseState({name}) {
       setTimeout(() => {
         console.log("Haciendo la validación");
 
-        if(state.value !== SECURITY_CODE) {
-          setState({ ...state, loading: false, error: true });                   // Cambiamos los States de loading y error usando la función 'setState' cuando el código de seguridad no sea igual al código de seguridad que tenemos definido, ademas es necesario para no sobreescrbir los otros estados que no estamos cambiando, usar el operador de propagación '...state' para copiar los otros estados que no estamos cambiando
-        }else{
-          setState({ ...state, loading: false, error: false });
-        }
-
+        if(state.value !== SECURITY_CODE) setState({ ...state, error: true });   // Cambiamos los States de loading y error usando la función 'setState' cuando el código de seguridad no sea igual al código de seguridad que tenemos definido, ademas es necesario para no sobreescrbir los otros estados que no estamos cambiando, usar el operador de propagación '...state' para copiar los otros estados que no estamos cambiando
+        setState((prevState) => ({ ...prevState, loading: false}))               // Usamos un Callback para cambiar 'loading' a false despues de haber ejecutado otro setState, esto por temas de Scopes y Closures, es necesario para no sobreescrbir los otros estados que no estamos cambiando, usar el Spread Operator '...prevState' para copiar los otros estados que no estamos cambiando
+        
         console.log("Terminando la validación");
       }, 2000);
     }
 
     console.log("Terminando el efecto");
-  }, [state.loading]);                                                          // Usamos el Hook 'useEffect' para ejecutar un efecto secundario, el cual recibe una función que se ejecutará cuando se renderice el Componente, y un arreglo de dependencias que se usará para ejecutar el efecto secundario cuando 'state.loading' cambie de valor
+  }, [state.loading]);                                                           // Usamos el Hook 'useEffect' para ejecutar un efecto secundario, el cual recibe una función que se ejecutará cuando se renderice el Componente, y un arreglo de dependencias que se usará para ejecutar el efecto secundario cuando 'state.loading' cambie de valor
 
 
   return (
