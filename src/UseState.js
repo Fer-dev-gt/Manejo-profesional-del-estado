@@ -11,7 +11,30 @@ function UseState({name}) {
     confirmed: false                                                             // State para mostrar pantalla para confirmar que se quiere eliminar
   });
 
-  console.log(state);
+  // Estas Arrow Functions guardadas dentro de variables van a convertir nuestro código a 'semi-declarativo' ya que vamos a poder reutilizarlas en varios lugares de nuestro código
+  const onConfirm = () => {
+    setState({ ...state, error: false,  confirmed: true });
+  }
+
+  const onError = () => {
+    setState({ ...state, error: true});
+  }
+
+  const onWrite = (event) => {
+    setState({ ...state, value: event.target.value });
+  }
+
+  const onCheck = () => {
+    setState({ ...state, loading: true });
+  }
+
+  const onDelete = () => {
+    setState({ ...state, deleted: true });
+  }
+
+  const onReset = () => {
+    setState({ ...state, confirmed: false, deleted: false, value: ''})
+  }
 
   React.useEffect(() => {
     console.log("Empezando el efecto");
@@ -21,9 +44,9 @@ function UseState({name}) {
         console.log("Haciendo la validación");
 
         if(state.value !== SECURITY_CODE) {
-          setState({ ...state, error: true });                                   // Cambiamos los States de loading y error usando la función 'setState' cuando el código de seguridad no sea igual al código de seguridad que tenemos definido, ademas es necesario para no sobreescrbir los otros estados que no estamos cambiando, usar el operador de propagación '...state' para copiar los otros estados que no estamos cambiando
+          onError();                                                             // Usamos las Arrow Functions guardadas dentro de variables para cambiar el estado de 'error' a true
         } else {
-          setState({ ...state, error: false, confirmed: true})
+          onConfirm();                                                           // Usamos las Arrow Functions guardadas dentro de variables para cambiar el estado de 'confirmed' a true
         }
 
         setState((prevState) => ({ ...prevState, loading: false}))               // Usamos un Callback para cambiar 'loading' a false despues de haber ejecutado otro setState, esto por temas de Scopes y Closures, es necesario para no sobreescrbir los otros estados que no estamos cambiando, usar el Spread Operator '...prevState' para copiar los otros estados que no estamos cambiando
@@ -48,11 +71,11 @@ function UseState({name}) {
           placeholder='Security Code' 
           value={state.value}
           disabled={state.loading}                                                           // Deshabilitamos el input cuando el loading esta cargando y así evitar que el usuario pueda escribir en el input y cuando termine el loading se ponga el anterior
-          onChange={(event) => { setState({ ...state, value: event.target.value }) }}        // Cambiamos el valor del State value usando la función 'setValue' cuando el usuario escriba en el input con el valor dentro del input
+          onChange={(event) => { onWrite(event); }}                                          // Usamos la Arrow Function guardada dentro de una variable para cambiar el estado de 'value' cuando el usuario escriba en el input
         />
         <button
           onClick={() => { 
-            setState({ ...state, loading: true, error: false })
+            onCheck();
           }}                              
         >Validate</button>
       </div>
@@ -66,7 +89,7 @@ function UseState({name}) {
     
           <button
             onClick={() => {
-              setState({ ...state, deleted: true })
+              onDelete();
             }}
           >
             Yes, delete
@@ -74,7 +97,7 @@ function UseState({name}) {
 
           <button
             onClick={() => {
-              setState({ ...state, confirmed: false, value: ''})
+              onReset();                                                                    // Usamos la Arrow Function guardada dentro de una variable para cambiar el estado de 'confirmed' a false y resetear el estado de 'value' a vacío y volver al inicio
             }}
           >
             No, go back
@@ -89,7 +112,7 @@ function UseState({name}) {
           <h2>{name} was deleted</h2>
           <button
             onClick={() => {
-              setState({ ...state, confirmed: false, deleted: false, value: ''})
+              onReset();
             }}
           >
             Go back, reset
