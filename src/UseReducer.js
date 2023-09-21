@@ -11,14 +11,24 @@ const initialState = {
   confirmed: false
 };
 
+const actionTypes = {
+  error: 'ERROR',
+  check: 'CHECK',
+  write: 'WRITE',
+  delete: 'DELETE',
+  reset: 'RESET',
+  confirm: 'CONFIRM',
+  finish_loading: 'FINISH_LOADING'
+}
+
 const reducerObject = (state, payload) => ({                                     // Usamos un Objeto para evaluar la acción (action.type) que se va a ejecutar, le retornamos implicitamente al Objeto usando '()' en vez de '{}' y así ya no escribir return
-  'CONFIRM': { ...state, error: false, loading: false, confirmed: true },
-  'ERROR': { ...state, error: true, loading: false },                            // El formato que usamos será de key: value, donde la key será el nombre de la acción y el value será el estado que se va a retornar
-  'CHECK': { ...state, loading: true },
-  'WRITE': { ...state, value: payload },
-  'DELETE': { ...state, deleted: true },
-  'RESET': { ...state, confirmed: false, deleted: false, value: ''},
-  'FINISH_LOADING': { ...state, loading: false }
+  [actionTypes.confirm]: { ...state, error: false, loading: false, confirmed: true },
+  [actionTypes.error]: { ...state, error: true, loading: false },                            // El formato que usamos será de key: value, donde la key será el nombre de la acción y el value será el estado que se va a retornar
+  [actionTypes.check]: { ...state, loading: true },
+  [actionTypes.write]: { ...state, value: payload },
+  [actionTypes.delete]: { ...state, deleted: true },
+  [actionTypes.reset]: { ...state, confirmed: false, deleted: false, value: ''},
+  [actionTypes.finish_loading]: { ...state, loading: false }
 });
 
 const reducer = (state, action) => {
@@ -32,7 +42,8 @@ const reducer = (state, action) => {
 
 function UseReducer({ name }) {
   const [state, dispatch] = React.useReducer(reducer, initialState);              // Usamos el Hook 'useReducer' para crear un solo 'state' que maneja varios estados, el cual recibe un reducer y un estado inicial, y retorna un estado y un dispatch, el cual es una función que se usa para ejecutar las acciones que se van a ejecutar en el 'reducer', el 'dispatch' va a reemplazar al 'setState' que usamos en el 'useState'
-  console.log(state);
+
+
 
   React.useEffect(() => {
     console.log("Empezando el efecto");
@@ -42,12 +53,12 @@ function UseReducer({ name }) {
         console.log("Haciendo la validación");
 
         if(state.value !== SECURITY_CODE) {
-          dispatch({ type: 'ERROR' });                                             // Usamos el 'dispatch' para ejecutar las acciones que se van a ejecutar en el 'reducer', en este caso ejecutamos la acción 'ERROR'
+          dispatch({ type: actionTypes.error });                                             // Usamos el 'dispatch' para ejecutar las acciones que se van a ejecutar en el 'reducer', en este caso ejecutamos la acción 'ERROR'
         } else {
-          dispatch({ type: 'CONFIRM' });                                           // Usamos el 'dispatch' para ejecutar las acciones que se van a ejecutar en el 'reducer', en este caso ejecutamos la acción 'CONFIRM'
+          dispatch({ type: actionTypes.confirm });                                           // Usamos el 'dispatch' para ejecutar las acciones que se van a ejecutar en el 'reducer', en este caso ejecutamos la acción 'CONFIRM'
         }
 
-        dispatch({ type: 'FINISH_LOADING' });                                      // Aplicamos el mismo concepto de arriba para cambiar el 'loading' a false despues de haber ejecutado otro 'dispatch', esto por temas de Scopes y Closures, es necesario para no sobreescrbir los otros estados que no estamos cambiando
+        dispatch({ type: actionTypes.finish_loading });                                      // Aplicamos el mismo concepto de arriba para cambiar el 'loading' a false despues de haber ejecutado otro 'dispatch', esto por temas de Scopes y Closures, es necesario para no sobreescrbir los otros estados que no estamos cambiando
         console.log("Terminando la validación");
       }, 1000);
     }
@@ -70,12 +81,12 @@ function UseReducer({ name }) {
           value={state.value}
           disabled={state.loading}                                                          // Deshabilitamos el input cuando el loading esta cargando y así evitar que el usuario pueda escribir en el input y cuando termine el loading se ponga el anterior
           onChange={(event) => { 
-            dispatch({ type: 'WRITE', payload: event.target.value });                       // Usamos el 'dispatch' para ejecutar las acciones que se van a ejecutar en el 'reducer', la acción es 'WRITE' y usamos el 'payload' para pasarle el valor del input
+            dispatch({ type: actionTypes.write, payload: event.target.value });                       // Usamos el 'dispatch' para ejecutar las acciones que se van a ejecutar en el 'reducer', la acción es 'WRITE' y usamos el 'payload' para pasarle el valor del input
           }}
         />
         <button
           onClick={() => { 
-            dispatch({ type: 'CHECK' });                                                    // Usamos el 'dispatch' para ejecutar las acciones que se van a ejecutar en el 'reducer', la acción es 'CHECK'
+            dispatch({ type: actionTypes.check });                                                    // Usamos el 'dispatch' para ejecutar las acciones que se van a ejecutar en el 'reducer', la acción es 'CHECK'
           }}                              
         >Validate</button>
       </div>
@@ -89,7 +100,7 @@ function UseReducer({ name }) {
     
           <button
             onClick={() => {
-              dispatch({ type: 'DELETE' });
+              dispatch({ type: actionTypes.delete });
             }}
           >
             Yes, delete
@@ -97,7 +108,7 @@ function UseReducer({ name }) {
 
           <button
             onClick={() => {
-              dispatch({ type: 'RESET' });
+              dispatch({ type: actionTypes.reset });
             }}
           >
             No, go back
@@ -112,7 +123,7 @@ function UseReducer({ name }) {
           <h2>{name} was deleted</h2>
           <button
             onClick={() => {
-              dispatch({ type: 'RESET' });
+              dispatch({ type: actionTypes.reset });
             }}
           >
             Go back, reset
