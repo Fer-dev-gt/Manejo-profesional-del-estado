@@ -1,0 +1,57 @@
+body {
+  background-color: #F5DEB3;
+}
+input {
+  margin: 1rem 1rem 0rem;
+  padding: 0.5rem;
+  border: solid 2px;
+  border-radius: 5px;
+  font-size: 1.5rem;
+}
+button {
+  margin: 1rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: solid 2px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  background-color: #ADD8E6 ;
+}
+.stateContainer {
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  border-radius: 16px;
+  border: solid 2px;
+}
+.container-background-1 {
+  margin-top: 2rem;
+  background-color: #FFC0CB;
+}
+.container-background-2 {
+  background-color: #98FB98;
+}
+.container-background-3 {
+  background-color: #B0C4DE;
+}
+.errorState {
+  color: red;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 1rem;
+}
+.askCodeLabel, .deleteConfirmationLabel{
+  font-size: 19px;
+  font-weight: bold;
+  text-align: center;
+  margin: 1rem;
+}
+.resetBtn{
+  margin-bottom: 2rem ;
+}

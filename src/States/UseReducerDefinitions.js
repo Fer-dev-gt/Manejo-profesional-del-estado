@@ -48,7 +48,6 @@ const reducerUsingObject = (state, action) => {
 };
 
 
-
 // Estos son todos los casos posibles de un UseReducer:
 const reducerSwitchCompleto = (state, action) => {
   switch(action.type) {
