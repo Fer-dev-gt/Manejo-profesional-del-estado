@@ -1,4 +1,4 @@
-<h1 align="center" id="title">React State Management Demostration</h1>
+<h1 align="center" id="title">React State Management Demonstration</h1>
 <p>This a simple but really interesting app, if you look under the code you will find 3 different way in which you can manage the state of your React Components, by using good old friend useState, this hook is really good and simple to learn but if you want to go back in time you can also find and study how to manage your State with Classes, that's right! You can even learn how to use Lifecycle methods like 'componentWillMount()' to manage any logic you want to execute. 
 
 Finally you can be more elegant and make your code more scalable by managing your State with the last but not least important of the bunch, useReducer! This hook can be very powerful specially when you implemented action types and action creators so your code can be more readible!
