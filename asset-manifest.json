@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Professional-React-state-management/static/css/main.b111170d.css",
-    "main.js": "/Professional-React-state-management/static/js/main.6c477b8a.js",
+    "main.css": "/Professional-React-state-management/static/css/main.cde06173.css",
+    "main.js": "/Professional-React-state-management/static/js/main.2dfa677a.js",
     "index.html": "/Professional-React-state-management/index.html",
-    "main.b111170d.css.map": "/Professional-React-state-management/static/css/main.b111170d.css.map",
-    "main.6c477b8a.js.map": "/Professional-React-state-management/static/js/main.6c477b8a.js.map"
+    "main.cde06173.css.map": "/Professional-React-state-management/static/css/main.cde06173.css.map",
+    "main.2dfa677a.js.map": "/Professional-React-state-management/static/js/main.2dfa677a.js.map"
   },
   "entrypoints": [
-    "static/css/main.b111170d.css",
-    "static/js/main.6c477b8a.js"
+    "static/css/main.cde06173.css",
+    "static/js/main.2dfa677a.js"
   ]
 }
