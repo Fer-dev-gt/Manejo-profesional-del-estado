@@ -63,4 +63,7 @@ button {
   h1::before{
     content: "Manage your React State in 3 different ways";
   }
+  input{
+    width: 65%;
+  }
 }
