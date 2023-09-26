@@ -1,6 +1,9 @@
 body {
   background-color: #F5DEB3;
 }
+h1::before{
+  content: "🧑🏽‍💻 Manage your React State in 3 different ways 🧑🏽‍💻";
+}
 input {
   margin: 1rem 1rem 0rem;
   padding: 0.5rem;
@@ -54,4 +57,10 @@ button {
 }
 .resetBtn{
   margin-bottom: 2rem ;
+}
+
+@media (max-width: 930px) {
+  h1::before{
+    content: "Manage your React State in 3 different ways";
+  }
 }
